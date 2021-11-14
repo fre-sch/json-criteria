@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/fre-sch/json-criteria/schema.json",
+  "title": "JSON-Criteria",
+  "description": "JSON-Criteria is a JSON document describing criteria, a tree of boolean expressions. These can be used to evaluate against context data.",
+  "oneOf": [
+    {
+      "description": "#AND",
+      "type": "object",
+      "properties": {
+        "#and": {
+          "type": "array",
+          "items": {"$ref": "https://github.com/fre-sch/json-criteria/schema.json"}
+        }
+      },
+      "required": ["#and"],
+      "additionalProperties": false
+    },
+    {
+      "description": "#OR",
+      "type": "object",
+      "properties": {
+        "#or": {
+          "type": "array",
+          "items": {"$ref": "https://github.com/fre-sch/json-criteria/schema.json"}
+        }
+      },
+      "required": ["#or"],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "#not": {"$ref": "https://github.com/fre-sch/json-criteria/schema.json"}
+      },
+      "required": ["#not"],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "#equals": {
+          "type": "object",
+          "minProperties": 1,
+          "maxProperties": 2,
+          "properties": {
+            "#caseIgnore": {
+              "#type": "boolean"
+            }
+          }
+        }
+      },
+      "required": ["#equals"],
+      "additionalProperties": false
+    },
+    {
+      "description": "does $field[] contain $value",
+      "type": "object",
+      "properties": {
+        "#contains": {
+          "type": "object",
+          "minProperties": 1,
+          "maxProperties": 1
+        }
+      },
+      "required": ["#contains"],
+      "additionalProperties": false
+    },
+    {
+      "description": "is $field part of $value[]",
+      "type": "object",
+      "properties": {
+        "#in": {
+          "type": "object",
+          "minProperties": 1,
+          "maxProperties": 1,
+          "additionalProperties": {
+            "type": "array"
+          }
+        }
+      },
+      "required": ["#in"],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "#regex": {
+          "type": "object",
+          "minProperties": 1,
+          "maxProperties": 2,
+          "properties": {
+            "#caseIgnore": {
+              "#type": "boolean"
+            }
+          },
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "required": ["#regex"],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "#isType": {
+          "type": "object",
+          "minProperties": 1,
+          "maxProperties": 1,
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "required": ["#isType"],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "#empty": {
+          "type": "object",
+          "minProperties": 1,
+          "maxProperties": 1,
+          "additionalProperties": {
+            "type": "boolean"
+          }
+        }
+      },
+      "required": ["#empty"],
+      "additionalProperties": false
+    }
+  ]
+}
